@@ -6,15 +6,21 @@
     <title>Évaluation McDonald's Boisbriand</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #ffcc00;
+            --text-color: #292929;
+            --bg-color: #f0f0f0;
+        }
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f0f0f0;
+            background-color: var(--bg-color);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: var(--text-color);
         }
         .container {
             background-color: white;
@@ -33,7 +39,7 @@
             height: auto;
         }
         h1 {
-            color: #292929;
+            color: var(--text-color);
             text-align: center;
             margin-bottom: 1.5rem;
         }
@@ -47,32 +53,39 @@
         .stars {
             display: flex;
             justify-content: center;
-            font-size: 36px; /* Augmenté de 24px à 36px */
-            letter-spacing: 5px; /* Ajouté pour espacer légèrement les étoiles */
+            font-size: 36px;
+            letter-spacing: 5px;
         }
         .stars span {
             color: #ddd;
             cursor: pointer;
-            transition: color 0.2s;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .stars span:hover {
+            transform: scale(1.2);
         }
         .stars span.active {
-            color: #ffcc00;
+            color: var(--primary-color);
         }
         button {
             display: block;
             width: 100%;
             padding: 0.8rem;
-            background-color: #ffcc00;
-            color: #292929;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 700;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
         button:hover {
             background-color: #ffd633;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
         }
         input, textarea {
             width: 100%;
@@ -80,59 +93,92 @@
             margin-bottom: 1rem;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .feedback {
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            .stars {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/McDonald%27s_logo.svg" alt="Logo McDonald's">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/McDonald%27s_logo.svg" alt="Logo McDonald's" aria-label="Logo McDonald's">
         </div>
         <h1>Évaluez votre expérience</h1>
         <div id="survey">
             <div class="question">
                 <p>Expérience Générale</p>
-                <div class="stars" id="stars1">
-                    <span data-value="1">☆</span>
-                    <span data-value="2">☆</span>
-                    <span data-value="3">☆</span>
-                    <span data-value="4">☆</span>
-                    <span data-value="5">☆</span>
+                <div class="stars" id="stars1" role="group" aria-label="Noter l'expérience générale sur 5">
+                    <span data-value="1" role="button" aria-label="1 étoile">☆</span>
+                    <span data-value="2" role="button" aria-label="2 étoiles">☆</span>
+                    <span data-value="3" role="button" aria-label="3 étoiles">☆</span>
+                    <span data-value="4" role="button" aria-label="4 étoiles">☆</span>
+                    <span data-value="5" role="button" aria-label="5 étoiles">☆</span>
                 </div>
             </div>
             <div class="question">
                 <p>Cuisine</p>
-                <div class="stars" id="stars2">
-                    <span data-value="1">☆</span>
-                    <span data-value="2">☆</span>
-                    <span data-value="3">☆</span>
-                    <span data-value="4">☆</span>
-                    <span data-value="5">☆</span>
+                <div class="stars" id="stars2" role="group" aria-label="Noter la cuisine sur 5">
+                    <span data-value="1" role="button" aria-label="1 étoile">☆</span>
+                    <span data-value="2" role="button" aria-label="2 étoiles">☆</span>
+                    <span data-value="3" role="button" aria-label="3 étoiles">☆</span>
+                    <span data-value="4" role="button" aria-label="4 étoiles">☆</span>
+                    <span data-value="5" role="button" aria-label="5 étoiles">☆</span>
                 </div>
             </div>
             <div class="question">
                 <p>Service</p>
-                <div class="stars" id="stars3">
-                    <span data-value="1">☆</span>
-                    <span data-value="2">☆</span>
-                    <span data-value="3">☆</span>
-                    <span data-value="4">☆</span>
-                    <span data-value="5">☆</span>
+                <div class="stars" id="stars3" role="group" aria-label="Noter le service sur 5">
+                    <span data-value="1" role="button" aria-label="1 étoile">☆</span>
+                    <span data-value="2" role="button" aria-label="2 étoiles">☆</span>
+                    <span data-value="3" role="button" aria-label="3 étoiles">☆</span>
+                    <span data-value="4" role="button" aria-label="4 étoiles">☆</span>
+                    <span data-value="5" role="button" aria-label="5 étoiles">☆</span>
                 </div>
             </div>
             <div class="question">
                 <p>Ambiance</p>
-                <div class="stars" id="stars4">
-                    <span data-value="1">☆</span>
-                    <span data-value="2">☆</span>
-                    <span data-value="3">☆</span>
-                    <span data-value="4">☆</span>
-                    <span data-value="5">☆</span>
+                <div class="stars" id="stars4" role="group" aria-label="Noter l'ambiance sur 5">
+                    <span data-value="1" role="button" aria-label="1 étoile">☆</span>
+                    <span data-value="2" role="button" aria-label="2 étoiles">☆</span>
+                    <span data-value="3" role="button" aria-label="3 étoiles">☆</span>
+                    <span data-value="4" role="button" aria-label="4 étoiles">☆</span>
+                    <span data-value="5" role="button" aria-label="5 étoiles">☆</span>
                 </div>
             </div>
-            <button onclick="submitSurvey()">Soumettre</button>
+            <button onclick="submitSurvey()" aria-label="Soumettre l'évaluation">Soumettre</button>
         </div>
         <div id="result" style="display: none;"></div>
+        <div id="feedback" class="feedback"></div>
     </div>
 
     <script>
@@ -142,8 +188,20 @@
             const container = document.getElementById(containerId);
             const stars = container.getElementsByTagName('span');
             for (let i = 0; i < stars.length; i++) {
-                stars[i].textContent = i < rating ? '★' : '☆';
-                stars[i].classList.toggle('active', i < rating);
+                if (i < rating) {
+                    stars[i].textContent = '★';
+                    stars[i].classList.add('active');
+                } else {
+                    stars[i].textContent = '☆';
+                    stars[i].classList.remove('active');
+                }
+                stars[i].style.transform = 'scale(1)';
+                setTimeout(() => {
+                    stars[i].style.transform = 'scale(1.2)';
+                }, i * 50);
+                setTimeout(() => {
+                    stars[i].style.transform = 'scale(1)';
+                }, i * 50 + 150);
             }
         }
 
@@ -158,36 +216,39 @@
 
         function submitSurvey() {
             if (Object.values(ratings).some(rating => rating === 0)) {
-                alert("Veuillez évaluer toutes les questions avant de soumettre.");
+                showFeedback("Veuillez évaluer toutes les questions avant de soumettre.", "error");
                 return;
             }
 
-            const average = Object.values(ratings).reduce((a, b) => a + b) / 4;
+            const generalExperience = ratings.q1;
             const surveyDiv = document.getElementById('survey');
             const resultDiv = document.getElementById('result');
 
             surveyDiv.style.display = 'none';
             resultDiv.style.display = 'block';
 
-            if (average >= 4) {
+            if (generalExperience > 3) {
                 resultDiv.innerHTML = `
                     <h2>Merci pour votre évaluation positive !</h2>
                     <p>Nous apprécierions si vous partagiez votre expérience sur notre page Google.</p>
-                    <a href="https://www.google.com/search?q=mcdonalds+boisbriand&oq=mcdonalds+boisbriand&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIPCAEQLhgKGK8BGMcBGIAEMggIAhAAGBYYHjIICAMQABgWGB4yCAgEEAAYFhgeMggIBRAAGBYYHjIICAYQABgWGB4yCAgHEAAYFhge0gEIMjc0OWowajSoAgCwAgE&sourceid=chrome&ie=UTF-8#lrd=0x4cc926260928d7a9:0x30afba4597ebbafb,3,,,,," target="_blank">
-                        <button>Laisser un avis sur Google</button>
+                    <a href="https://www.google.com/search?q=mcdonalds+boisbriand#lrd=0x4cc926260928d7a9:0x30afba4597ebbafb,3,,," target="_blank">
+                        <button aria-label="Laisser un avis sur Google">Laisser un avis sur Google</button>
                     </a>
                 `;
+                showFeedback("Merci pour votre évaluation positive !", "success");
             } else {
                 resultDiv.innerHTML = `
                     <h2>Merci pour vos commentaires.</h2>
                     <p>Nous aimerions en savoir plus sur votre expérience. Pouvons-nous vous contacter ?</p>
-						<form action="https://formspree.io/f/xkgwbnbn" method="POST">
-							<input type="text" name="name" placeholder="Votre nom" required>
-							<input type="email" name="email" placeholder="Votre email" required>
-							<textarea name="comment" placeholder="Commentaires additionnels" required></textarea>
-							<button type="submit">Envoyer</button>
-						</form>
+                    <form id="contactForm" onsubmit="return sendNegativeFeedback(event)">
+                        <input type="text" id="name" placeholder="Votre nom" required aria-label="Votre nom">
+                        <input type="email" id="email" placeholder="Votre email" required aria-label="Votre email">
+                        <input type="datetime-local" id="visitDate" required aria-label="Date et heure de votre visite">
+                        <textarea id="comment" placeholder="Commentaires additionnels" required aria-label="Commentaires additionnels"></textarea>
+                        <button type="submit" aria-label="Envoyer les commentaires">Envoyer</button>
+                    </form>
                 `;
+                showFeedback("Nous apprécions vos commentaires.", "success");
             }
         }
 
@@ -195,15 +256,47 @@
             event.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const visitDate = document.getElementById('visitDate').value;
             const comment = document.getElementById('comment').value;
             
-            // Ici, vous devriez normalement envoyer ces données à votre serveur
-            // Pour cet exemple, nous allons simplement simuler l'envoi
-            console.log(`Envoi du commentaire négatif à 40290@post.mcdonalds.ca`);
-            console.log(`Nom: ${name}, Email: ${email}, Commentaire: ${comment}`);
+            const data = {
+                name: name,
+                email: email,
+                visitDate: visitDate,
+                comment: comment,
+                generalRating: ratings.q1,
+                cuisineRating: ratings.q2,
+                serviceRating: ratings.q3,
+                ambianceRating: ratings.q4
+            };
             
-            alert("Merci pour vos commentaires. Nous vous contacterons bientôt.");
+            fetch('https://script.google.com/macros/s/AKfycbyPK_dK6FNsdlnBiveSYjZeAeV2aU2J1SsjkWtK4rh-uIVaqyJ3O5UKTRWttdPQWA3k/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                showFeedback("Merci pour vos commentaires. Nous vous contacterons bientôt.", "success");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showFeedback("Une erreur s'est produite. Veuillez réessayer plus tard.", "error");
+            });
+
             return false;
+        }
+
+        function showFeedback(message, type) {
+            const feedbackDiv = document.getElementById('feedback');
+            feedbackDiv.textContent = message;
+            feedbackDiv.className = `feedback ${type}`;
+            feedbackDiv.style.display = 'block';
+            setTimeout(() => {
+                feedbackDiv.style.display = 'none';
+            }, 5000);
         }
     </script>
 </body>
