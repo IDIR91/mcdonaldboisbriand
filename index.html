@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évaluation McDonald's Boisbriand</title>
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/2048px-McDonald%27s_Golden_Arches.svg.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/2048px-McDonald%27s_Golden_Arches.svg.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/2048px-McDonald%27s_Golden_Arches.svg.png">
+    <title>Évaluation Gestion Feraoun</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -52,6 +49,14 @@
         .question p {
             margin-bottom: 0.5rem;
             font-weight: 500;
+		.copyright {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
         }
         .stars {
             display: flex;
@@ -98,29 +103,13 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
         input[type="datetime-local"] {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
+            width: 100%;
             padding: 0.5rem;
-            border: 1px solid #ccc;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
-            width: 100%;
-            background-color: white;
-            color: #333;
-        }
-        input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
-            color: #333;
-        }
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-            color: #333;
-            opacity: 1;
         }
         .feedback {
             padding: 1rem;
@@ -140,17 +129,6 @@
         @media (max-width: 600px) {
             .container {
                 padding: 1rem;
-                width: 90%;
-                max-width: none;
-            }
-            input, textarea, button {
-                font-size: 16px;
-            }
-            h1 {
-                font-size: 24px;
-            }
-            .question p {
-                font-size: 18px;
             }
             .stars {
                 font-size: 28px;
@@ -161,7 +139,7 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/McDonald%27s_logo.svg" alt="Logo McDonald's" aria-label="Logo McDonald's">
+            <img src="logo.png" alt="Logo" aria-label="Logo">
         </div>
         <h1>Évaluez votre expérience</h1>
         <div id="survey">
@@ -209,16 +187,13 @@
         </div>
         <div id="result" style="display: none;"></div>
         <div id="feedback" class="feedback"></div>
+		<div class="copyright">
+            © 2024 Groupe de Gestion Feraoun Inc. Tous droits réservés.
+        </div>
     </div>
 
     <script>
         let ratings = {q1: 0, q2: 0, q3: 0, q4: 0};
-
-        window.onload = function() {
-            var now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            document.getElementById('visitDate').value = now.toISOString().slice(0,16);
-        }
 
         function highlightStars(containerId, rating) {
             const container = document.getElementById(containerId);
@@ -267,7 +242,7 @@
                 resultDiv.innerHTML = `
                     <h2>Merci pour votre évaluation positive !</h2>
                     <p>Nous apprécierions si vous partagiez votre expérience sur notre page Google.</p>
-                    <a href="https://www.google.com/search?q=mcdonalds+boisbriand#lrd=0x4cc926260928d7a9:0x30afba4597ebbafb,3,,," target="_blank">
+                    <a href="https://www.google.com" target="_blank">
                         <button aria-label="Laisser un avis sur Google">Laisser un avis sur Google</button>
                     </a>
                 `;
@@ -279,8 +254,8 @@
                     <form id="contactForm" onsubmit="return sendNegativeFeedback(event)">
                         <input type="text" id="name" placeholder="Votre nom" required aria-label="Votre nom">
                         <input type="email" id="email" placeholder="Votre email" required aria-label="Votre email">
-                        <label for="visitDate">Date et heure de l'incident</label>
-                        <input type="datetime-local" id="visitDate" name="visitDate" required aria-label="Date et heure de l'incident" placeholder="Sélectionnez la date et l'heure">
+						<p style="font-size: 0.85em;">Date et heure de votre visite</p>
+                        <input type="datetime-local" id="visitDate" required aria-label="Date et heure de votre visite">
                         <textarea id="comment" placeholder="Commentaires additionnels" required aria-label="Commentaires additionnels"></textarea>
                         <button type="submit" aria-label="Envoyer les commentaires">Envoyer</button>
                     </form>
